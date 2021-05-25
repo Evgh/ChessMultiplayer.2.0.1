@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChessMultiplayer.Views.GameObserverPage"
+             xmlns:local="clr-namespace:ChessMultiplayer.Views;assembly=ChessMultiplayer.2.0.1"             
+             xmlns:localControls="clr-namespace:ChessMultiplayer.Views.UserControls;assembly=ChessMultiplayer.2.0.1">
+    
+    <ContentPage.Resources>
+        <local:MoveParameterToIntConverter x:Key="moveParToInt"/>
+    </ContentPage.Resources>
+
+    
+    <ContentPage.Content>
+        <Grid Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="16*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnSpacing>
+                <OnPlatform x:TypeArguments="x:Double" Android="0"/>
+            </Grid.ColumnSpacing>
+
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Row="0" Orientation="Horizontal">
+                <Label Text="Текущий ход: "/>
+                <Picker ItemsSource="{Binding User.GameObserverViewModel.MoveHistory, UpdateSourceEventName=OnPropertyChanged}" 
+                        SelectedIndex="{Binding User.GameObserverViewModel.LastMove, Converter={StaticResource moveParToInt}}"/>
+                        
+            </StackLayout>
+
+            <StackLayout x:Name="deadWhitesStack" Grid.Row="1"
+                             Orientation="Vertical" 
+                             HorizontalOptions="Center"
+                             VerticalOptions="Start"
+                             WidthRequest="{Binding Width, Source={x:Reference checkerBoard}}"
+                             BackgroundColor="Maroon">
+
+                <ScrollView x:Name="whiteScroll" Orientation="Horizontal" HorizontalScrollBarVisibility="Always">
+
+                    <CollectionView ItemsSource="{Binding User.GameObserverViewModel.DeadWhites, Mode=TwoWay}">
+
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5" VerticalItemSpacing="5"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImagePath}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+            </StackLayout>
+
+            <localControls:CheckerBoard x:Name="checkerBoard" Grid.Row="2"
+                                            BindingContext ="{Binding User.GameObserverViewModel}"
+                                            VerticalOptions="CenterAndExpand"
+                                            HorizontalOptions="Center"
+                                            WidthRequest="{Binding Height, Source={x:Reference checkerBoard}}">
+                <localControls:CheckerBoard.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double" Android ="300" WinPhone="1000"/>
+                </localControls:CheckerBoard.HeightRequest>
+            </localControls:CheckerBoard>
+
+
+            <StackLayout x:Name="deadBlacksStack" Grid.Row="3"
+                             Orientation="Vertical" 
+                             HorizontalOptions="Center"
+                             VerticalOptions="Start"
+                             WidthRequest="{Binding Width, Source={x:Reference checkerBoard}}"
+                             BackgroundColor="Maroon">
+
+                <ScrollView x:Name="blackScroll" Orientation="Horizontal" HorizontalScrollBarVisibility="Always">
+
+                    <CollectionView ItemsSource="{Binding User.GameObserverViewModel.DeadBlacks, Mode=TwoWay}">
+
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5" VerticalItemSpacing="5"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImagePath}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+            </StackLayout>
+
+
+            <StackLayout  Grid.Row="4" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                
+                <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
+
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                        <Label Text="За белых: "/>
+                        <Label Text="{Binding User.UserId}"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" VerticalOptions="End">
+                        <Label Text="За черных: "/>
+                        <Label Text="Гость" />
+                    </StackLayout>
+                </StackLayout>
+
+                <Button HorizontalOptions="End"
+                        VerticalOptions="CenterAndExpand"
+                        Text="Продолжить игру" 
+                        Command="{Binding ContinueGameCommand}"/>
+                
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

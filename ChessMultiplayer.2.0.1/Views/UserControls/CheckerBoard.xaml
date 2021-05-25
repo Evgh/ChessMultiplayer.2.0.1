@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChessMultiplayer.Views.UserControls.CheckerBoard">
+  <ContentView.Content>
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/> <!--0-->
+                <ColumnDefinition Width="*"/> <!--1-->
+                <ColumnDefinition Width="*"/> <!--2-->
+                <ColumnDefinition Width="*"/> <!--3-->
+                <ColumnDefinition Width="*"/> <!--4-->
+                <ColumnDefinition Width="*"/> <!--5-->
+                <ColumnDefinition Width="*"/> <!--6-->
+                <ColumnDefinition Width="*"/> <!--7-->
+                <ColumnDefinition Width="*"/> <!--8-->
+                <ColumnDefinition Width="auto"/> <!--9-->
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <!--0-->
+                <RowDefinition Height="*"/>
+                <!--1-->
+                <RowDefinition Height="*"/>
+                <!--2-->
+                <RowDefinition Height="*"/>
+                <!--3-->
+                <RowDefinition Height="*"/>
+                <!--4-->
+                <RowDefinition Height="*"/>
+                <!--5-->
+                <RowDefinition Height="*"/>
+                <!--6-->
+                <RowDefinition Height="*"/>
+                <!--7-->
+                <RowDefinition Height="*"/>
+                <!--8-->
+                <RowDefinition Height="auto"/>
+                <!--9-->
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="Board" 
+                  Grid.Row="1" ColumnSpan="8"
+                  Grid.Column="1" RowSpan="8"
+                  WidthRequest="{Binding Height, Source={x:Reference Board}}" 
+                  Padding="0" 
+                  Margin="0" 
+                  ColumnSpacing="0" 
+                  RowSpacing="0" 
+                  BindingContextChanged="Board_BindingContextChanged">
+
+                <Grid.ColumnSpacing>
+                    <OnPlatform x:TypeArguments="x:Double" Android ="0"/>
+                </Grid.ColumnSpacing>
+
+                <Grid.RowSpacing>
+                    <OnPlatform x:TypeArguments="x:Double" Android ="0"/>
+                </Grid.RowSpacing>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            </Grid>
+
+
+
+            <Label Text=" 8 " Grid.Column="0" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 7 " Grid.Column="0" Grid.Row="2" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 6 " Grid.Column="0" Grid.Row="3" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 5 " Grid.Column="0" Grid.Row="4" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 4 " Grid.Column="0" Grid.Row="5" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 3 " Grid.Column="0" Grid.Row="6" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 2 " Grid.Column="0" Grid.Row="7" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 1 " Grid.Column="0" Grid.Row="8" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            
+            <Label Text=" 8 " Grid.Column="9" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 7 " Grid.Column="9" Grid.Row="2" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 6 " Grid.Column="9" Grid.Row="3" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 5 " Grid.Column="9" Grid.Row="4" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 4 " Grid.Column="9" Grid.Row="5" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 3 " Grid.Column="9" Grid.Row="6" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 2 " Grid.Column="9" Grid.Row="7" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text=" 1 " Grid.Column="9" Grid.Row="8" VerticalOptions="Center" HorizontalOptions="Center"/>
+
+            <Label Text="A" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="B" Grid.Row="0" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="C" Grid.Row="0" Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="D" Grid.Row="0" Grid.Column="4" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="E" Grid.Row="0" Grid.Column="5" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="F" Grid.Row="0" Grid.Column="6" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="G" Grid.Row="0" Grid.Column="7" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="H" Grid.Row="0" Grid.Column="8" VerticalOptions="Center" HorizontalOptions="Center"/>
+
+            <Label Text="A" Grid.Row="9" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="B" Grid.Row="9" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="C" Grid.Row="9" Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="D" Grid.Row="9" Grid.Column="4" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="E" Grid.Row="9" Grid.Column="5" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="F" Grid.Row="9" Grid.Column="6" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="G" Grid.Row="9" Grid.Column="7" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="H" Grid.Row="9" Grid.Column="8" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

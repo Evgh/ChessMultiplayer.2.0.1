@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:localViews="clr-namespace:ChessMultiplayer.Views;assembly=ChessMultiplayer.2.0.1"
+             x:Class="ChessMultiplayer.Views.UserControls.Check">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <localViews:ColorConverter x:Key="colorConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <ImageButton x:Name="check"
+                     android:Padding="3"
+                     Source="{Binding ImagePath}" 
+                     BackgroundColor="{Binding Color, Converter={StaticResource colorConverter}}"
+                     Command="{Binding PressCommand}"
+                     CommandParameter="{Binding BindingContext, Source={x:Reference check}}">
+        </ImageButton>
+    </ContentView.Content>
+</ContentView>

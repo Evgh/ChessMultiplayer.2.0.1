@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using ChessMultiplayer.Models;
+using ChessMultiplayer.ViewModels;
+
+namespace ChessMultiplayer.Views.UserControls
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class Check : ContentView
+    {
+        public static readonly BindableProperty PositionProperty = BindableProperty.Create("Position",
+                                                                                     typeof(PositionVM),
+                                                                                     typeof(Check),
+                                                                                     null);
+        public Check()
+        {
+            InitializeComponent();
+        }
+
+        public PositionVM Position
+        {
+            set
+            {
+                SetValue(PositionProperty, value);
+            }
+            get
+            {
+                return (PositionVM)GetValue(PositionProperty);
+            }
+        }
+    }
+}

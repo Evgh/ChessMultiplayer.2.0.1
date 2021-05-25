@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ChessMultiplayer.Views;assembly=ChessMultiplayer.2.0.1"
+             xmlns:localControls="clr-namespace:ChessMultiplayer.Views.UserControls;assembly=ChessMultiplayer.2.0.1"
+             x:Class="ChessMultiplayer.Views.GamePage">
+
+    <ContentPage.Resources>
+        <local:MoveParameterToIntConverter x:Key="moveParToInt"/>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="iconsNew.png" Text="New" Priority="0" Command="{Binding User.NewGameCommand}"/>
+        <ToolbarItem Order="Primary" Icon="iconsSave.png" Text="Save" Priority="0" Command="{Binding SaveCommand}"/>
+        <ToolbarItem Order="Primary" Icon="iconsUndo.png" Text="Undo" Priority="0"  Command="{Binding User.GameViewModel.UndoCommand}"/>
+        <ToolbarItem Order="Primary" Icon="iconsRedo.png" Text="Redo" Priority="1" Command="{Binding User.GameViewModel.RedoCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="16*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnSpacing>
+                <OnPlatform x:TypeArguments="x:Double" Android="0"/>
+            </Grid.ColumnSpacing>
+
+            <Label Text="Гость" HorizontalOptions="Center" VerticalOptions="End" Grid.Row="0"/>
+            <Label Text="{Binding User.UserId}" HorizontalOptions="Center" VerticalOptions="End" Grid.Row="4"/>
+            
+            <StackLayout x:Name="deadWhitesStack" Grid.Row="1"
+                             Orientation="Vertical" 
+                             HorizontalOptions="Center"
+                             VerticalOptions="Start"
+                             WidthRequest="{Binding Width, Source={x:Reference checkerBoard}}"
+                             BackgroundColor="Maroon">
+
+                <ScrollView x:Name="whiteScroll" Orientation="Horizontal" HorizontalScrollBarVisibility="Always">
+
+                    <CollectionView ItemsSource="{Binding User.GameViewModel.DeadWhites, Mode=TwoWay}">
+
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5" VerticalItemSpacing="5"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImagePath}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+            </StackLayout>
+
+            <localControls:CheckerBoard x:Name="checkerBoard" Grid.Row="2"
+                                            BindingContext ="{Binding User.GameViewModel}"
+                                            VerticalOptions="CenterAndExpand"
+                                            HorizontalOptions="Center"
+                                            WidthRequest="{Binding Height, Source={x:Reference checkerBoard}}">
+                <localControls:CheckerBoard.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double" Android ="300" WinPhone="1000"/>
+                </localControls:CheckerBoard.HeightRequest>
+            </localControls:CheckerBoard>
+
+
+            <StackLayout x:Name="deadBlacksStack" Grid.Row="3"
+                             Orientation="Vertical" 
+                             HorizontalOptions="Center"
+                             VerticalOptions="Start"
+                             WidthRequest="{Binding Width, Source={x:Reference checkerBoard}}"
+                             BackgroundColor="Maroon">
+
+                <ScrollView x:Name="blackScroll" Orientation="Horizontal" HorizontalScrollBarVisibility="Always">
+
+                    <CollectionView ItemsSource="{Binding User.GameViewModel.DeadBlacks, Mode=TwoWay}">
+
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="5" VerticalItemSpacing="5"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImagePath}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
