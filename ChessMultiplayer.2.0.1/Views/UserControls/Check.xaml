@@ -5,12 +5,6 @@
              xmlns:localViews="clr-namespace:ChessMultiplayer.Views;assembly=ChessMultiplayer.2.0.1"
              x:Class="ChessMultiplayer.Views.UserControls.Check">
 
-    <ContentView.Resources>
-        <ResourceDictionary>
-            <localViews:ColorConverter x:Key="colorConverter" />
-        </ResourceDictionary>
-    </ContentView.Resources>
-
     <ContentView.Content>
         <ImageButton x:Name="check"
                      android:Padding="3"

@@ -18,6 +18,7 @@ namespace ChessMultiplayer.ViewModels
         public NavigationVM Navigation { get; protected set; }
         public AutorizationVM Autorization { get; protected set; }
         public RegistrationVM Registration { get; protected set; }
+        public OptionsVM Options { get; protected set; }
 
         public MainVM(NavigationVM navigation = null, UserVM currentUser = null)
         {
@@ -26,6 +27,7 @@ namespace ChessMultiplayer.ViewModels
 
             Autorization = new AutorizationVM();
             Registration = new RegistrationVM();
+            Options = new OptionsVM();
 
             AutorizationCommand = new Command(Autorize);
             LogoutCommand = new Command(Logout);

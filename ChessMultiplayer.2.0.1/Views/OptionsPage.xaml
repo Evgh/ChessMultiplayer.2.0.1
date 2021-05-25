@@ -4,6 +4,7 @@
              x:Class="ChessMultiplayer.Views.OptionsPage">
     <ContentPage.Content>
         <StackLayout>
+            <CheckBox IsChecked="{Binding Options.ShowPrompt, Mode=TwoWay}"/>
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />

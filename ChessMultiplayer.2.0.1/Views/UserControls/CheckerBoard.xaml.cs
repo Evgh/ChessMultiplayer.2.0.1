@@ -28,7 +28,8 @@ namespace ChessMultiplayer.Views.UserControls
                 for (int j = 0; j < Board.ColumnDefinitions.Count; j++)
                 {
                     var check = new Check();
-                    check.BindingContext = gameViewModel[i, j];
+                    check.BindingContext = gameViewModel;
+                    check.Position = gameViewModel[i, j];
                     Board.Children.Add(check, j, i);
                 }
             }
