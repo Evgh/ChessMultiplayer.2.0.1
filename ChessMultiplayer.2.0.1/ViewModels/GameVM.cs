@@ -62,9 +62,9 @@ namespace ChessMultiplayer.ViewModels
                 ResetManagers(); 
                 MoveHistory = new ObservableCollection<MoveParameters>(game.Moves);
 
-                OnPropertyChanges("LastMove");
-                OnPropertyChanges("MoveHistory");
-                OnPropertyChanges();
+                OnPropertyChanged("LastMove");
+                OnPropertyChanged("MoveHistory");
+                OnPropertyChanged();
             }
         }
 
@@ -75,7 +75,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 historyManager.LastMove = value;
-                OnPropertyChanges("LastMove");
+                OnPropertyChanged("LastMove");
             }
         }
 
@@ -85,7 +85,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 historyManager.MoveHistory = value;
-                OnPropertyChanges("MoveHistory");
+                OnPropertyChanged("MoveHistory");
             }
         }
 
@@ -96,7 +96,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 positionsManager.DeadWhites = value;
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
@@ -106,7 +106,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 positionsManager.DeadBlacks = value;
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
@@ -116,7 +116,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 positionsManager.SelectedPosition = value;
-                OnPropertyChanges("SelectedPosition");
+                OnPropertyChanged("SelectedPosition");
             }
         }
         #endregion
@@ -189,12 +189,12 @@ namespace ChessMultiplayer.ViewModels
             positionsManager.StartNewGame();
             historyManager.ResetHistory();
 
-            OnPropertyChanges("DeadWhites");
-            OnPropertyChanges("DeadBlacks");
+            OnPropertyChanged("DeadWhites");
+            OnPropertyChanged("DeadBlacks");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanges([CallerMemberName] string PropertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }

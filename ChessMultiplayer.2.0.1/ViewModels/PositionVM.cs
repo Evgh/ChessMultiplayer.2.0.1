@@ -28,8 +28,8 @@ namespace ChessMultiplayer.ViewModels
             {
                 type = value;
                 if (color != null) color.Type = value;
-                OnPropertyChanges("Type");
-                OnPropertyChanges("Color");
+                OnPropertyChanged("Type");
+                OnPropertyChanged("Color");
             }
         }
 
@@ -41,8 +41,8 @@ namespace ChessMultiplayer.ViewModels
             {
                 state = value;
                 if (color != null) color.State = value;
-                OnPropertyChanges("State");
-                OnPropertyChanges("Color");
+                OnPropertyChanged("State");
+                OnPropertyChanged("Color");
             }
         }
 
@@ -53,7 +53,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 color = value;
-                OnPropertyChanges("Color");
+                OnPropertyChanged("Color");
             }
         }
 
@@ -65,8 +65,8 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 figure = value;
-                OnPropertyChanges("Figure");
-                OnPropertyChanges("ImagePath");
+                OnPropertyChanged("Figure");
+                OnPropertyChanged("ImagePath");
             }
         }
 
@@ -88,7 +88,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 row = value;
-                OnPropertyChanges("Row");
+                OnPropertyChanged("Row");
             }
         }
 
@@ -99,7 +99,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 column = value;
-                OnPropertyChanges("Column");
+                OnPropertyChanged("Column");
             }
         }
 
@@ -110,7 +110,7 @@ namespace ChessMultiplayer.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanges([CallerMemberName] string PropertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }

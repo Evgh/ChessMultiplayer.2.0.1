@@ -35,14 +35,14 @@ namespace ChessMultiplayer.ViewModels
                 currentUser = value;
                 NewGame();
 
-                OnPropertyChanges("IsGuest");
-                OnPropertyChanges("IsAuthorized");
-                OnPropertyChanges("UserId");
+                OnPropertyChanged("IsGuest");
+                OnPropertyChanged("IsAuthorized");
+                OnPropertyChanged("UserId");
 
-                OnPropertyChanges("Games");
-                OnPropertyChanges("SelectedGame");
+                OnPropertyChanged("Games");
+                OnPropertyChanged("SelectedGame");
 
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
@@ -57,7 +57,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 currentUser.Games = value;
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
@@ -71,7 +71,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 GameViewModel.CurrentGame = value;
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
@@ -85,7 +85,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 GameObserverViewModel.CurrentGame = value;
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
@@ -98,7 +98,7 @@ namespace ChessMultiplayer.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanges([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

@@ -34,7 +34,7 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             set
             {
                 SetLastMove(value);
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
@@ -51,7 +51,7 @@ namespace ChessMultiplayer.ViewModels.GameLogic
                         Do(move);
                 }
 
-                OnPropertyChanges();
+                OnPropertyChanged();
             } 
         }
 
@@ -155,7 +155,7 @@ namespace ChessMultiplayer.ViewModels.GameLogic
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanges([CallerMemberName] string PropertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }

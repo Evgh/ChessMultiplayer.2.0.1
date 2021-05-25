@@ -97,7 +97,7 @@ namespace ChessMultiplayer.ViewModels
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanges([CallerMemberName] string PropertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }

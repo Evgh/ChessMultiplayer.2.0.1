@@ -22,7 +22,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 login = value;
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
@@ -33,7 +33,7 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 password = value;
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
@@ -44,13 +44,13 @@ namespace ChessMultiplayer.ViewModels
             set
             {
                 invalidAutorization = value;
-                OnPropertyChanges();
+                OnPropertyChanged();
             }
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanges([CallerMemberName] string PropertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
