@@ -2,15 +2,16 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using ChessMultiplayer.Views.ViewsServices;
 
 namespace ChessMultiplayer.ViewModels
 {
     public class NavigationVM : INotifyPropertyChanged
     {
         public INavigation Navigation { get; protected set; }
-        public Views.IAbstractViewFabric ViewFabric { get; protected set; }
+        public IAbstractViewFabric ViewFabric { get; protected set; }
 
-        public NavigationVM(INavigation navigation, Views.IAbstractViewFabric viewFabric)
+        public NavigationVM(INavigation navigation, IAbstractViewFabric viewFabric)
         {
             Navigation = navigation;
             ViewFabric = viewFabric;

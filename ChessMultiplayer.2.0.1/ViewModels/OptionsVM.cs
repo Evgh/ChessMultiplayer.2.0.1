@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using ChessMultiplayer._2._0._1;
-using ChessMultiplayer.Views.Converters;
+using ChessMultiplayer.Converters;
 
 namespace ChessMultiplayer.ViewModels
 {

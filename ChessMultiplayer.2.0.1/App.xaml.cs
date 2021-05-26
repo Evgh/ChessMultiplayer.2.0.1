@@ -14,7 +14,7 @@ namespace ChessMultiplayer._2._0._1
 
         protected virtual void DependencyInjection()
         {
-            var viewFabric = new Views.ViewFabric();
+            var viewFabric = new Views.ViewsServices.ViewFabric();
             var mainPage = viewFabric.CreateMenuPage();
 
             var navigation = new ViewModels.NavigationVM(mainPage.Navigation, viewFabric); // создаем контекст данных и задаем для него систему навигации

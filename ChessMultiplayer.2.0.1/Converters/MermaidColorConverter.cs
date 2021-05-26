@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Globalization;
 using Xamarin.Forms;
 using ChessMultiplayer.ViewModels;
 
-namespace ChessMultiplayer.Views.Converters
+namespace ChessMultiplayer.Converters
 {
-    public class CapcakeColorConverter : IValueConverter
+    public class MermaidColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -17,9 +15,9 @@ namespace ChessMultiplayer.Views.Converters
             {
                 switch (color.State)
                 {
-                    case PositionVM.CheckState.Simple: return Color.PeachPuff;
-                    case PositionVM.CheckState.Selected: return Color.LimeGreen; 
-                    case PositionVM.CheckState.CanMove: return Color.White;
+                    case PositionVM.CheckState.Simple: return Color.DarkSeaGreen;
+                    case PositionVM.CheckState.Selected: return Color.Gold;
+                    case PositionVM.CheckState.CanMove: return Color.PaleGreen;
                     case PositionVM.CheckState.CanBeat: return Color.Tomato;
                 }
             }
@@ -27,9 +25,9 @@ namespace ChessMultiplayer.Views.Converters
             {
                 switch (color.State)
                 {
-                    case PositionVM.CheckState.Simple: return Color.Purple;
-                    case PositionVM.CheckState.Selected: return Color.LimeGreen;
-                    case PositionVM.CheckState.CanMove: return Color.MediumOrchid;
+                    case PositionVM.CheckState.Simple: return Color.Navy;
+                    case PositionVM.CheckState.Selected: return Color.Gold;
+                    case PositionVM.CheckState.CanMove: return Color.RoyalBlue;
                     case PositionVM.CheckState.CanBeat: return Color.DarkRed;
 
                 }

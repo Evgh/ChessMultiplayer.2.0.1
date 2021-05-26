@@ -5,9 +5,9 @@ using System.Globalization;
 using Xamarin.Forms;
 using ChessMultiplayer.ViewModels;
 
-namespace ChessMultiplayer.Views.Converters
+namespace ChessMultiplayer.Converters
 {
-    public class CapcakeColorConverterPro : IValueConverter
+    public class CapcakeColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -18,9 +18,9 @@ namespace ChessMultiplayer.Views.Converters
                 switch (color.State)
                 {
                     case PositionVM.CheckState.Simple: return Color.PeachPuff;
-                    case PositionVM.CheckState.Selected: return Color.LimeGreen;
-                    case PositionVM.CheckState.CanMove: return Color.PeachPuff;
-                    case PositionVM.CheckState.CanBeat: return Color.PeachPuff;
+                    case PositionVM.CheckState.Selected: return Color.LimeGreen; 
+                    case PositionVM.CheckState.CanMove: return Color.White;
+                    case PositionVM.CheckState.CanBeat: return Color.Tomato;
                 }
             }
             else
@@ -29,8 +29,8 @@ namespace ChessMultiplayer.Views.Converters
                 {
                     case PositionVM.CheckState.Simple: return Color.Purple;
                     case PositionVM.CheckState.Selected: return Color.LimeGreen;
-                    case PositionVM.CheckState.CanMove: return Color.Purple;
-                    case PositionVM.CheckState.CanBeat: return Color.Purple;
+                    case PositionVM.CheckState.CanMove: return Color.MediumOrchid;
+                    case PositionVM.CheckState.CanBeat: return Color.DarkRed;
 
                 }
             }
@@ -42,5 +42,4 @@ namespace ChessMultiplayer.Views.Converters
             return DateTime.Now.ToString("dd.MM.yyyy");
         }
     }
-
 }

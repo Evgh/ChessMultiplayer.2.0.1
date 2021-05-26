@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace ChessMultiplayer.Views
+namespace ChessMultiplayer.Views.ViewsServices
 {
     public class ViewFabric : IAbstractViewFabric
     {

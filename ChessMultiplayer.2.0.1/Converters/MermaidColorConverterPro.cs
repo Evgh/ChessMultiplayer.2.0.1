@@ -3,7 +3,7 @@ using System.Globalization;
 using Xamarin.Forms;
 using ChessMultiplayer.ViewModels;
 
-namespace ChessMultiplayer.Views.Converters
+namespace ChessMultiplayer.Converters
 {
     public class MermaidColorConverterPro : IValueConverter
     {

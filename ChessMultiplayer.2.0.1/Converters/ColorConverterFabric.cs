@@ -4,7 +4,7 @@ using System.Text;
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace ChessMultiplayer.Views.Converters
+namespace ChessMultiplayer.Converters
 {
     public static class ColorConverterFabric
     {

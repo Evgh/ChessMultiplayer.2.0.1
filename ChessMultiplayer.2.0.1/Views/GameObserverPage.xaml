@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChessMultiplayer.Views.GameObserverPage"
-             xmlns:converters="clr-namespace:ChessMultiplayer.Views.Converters;assembly=ChessMultiplayer.2.0.1"             
+             xmlns:converters="clr-namespace:ChessMultiplayer.Converters;assembly=ChessMultiplayer.2.0.1"             
              xmlns:localControls="clr-namespace:ChessMultiplayer.Views.UserControls;assembly=ChessMultiplayer.2.0.1">
     
     <ContentPage.Resources>
