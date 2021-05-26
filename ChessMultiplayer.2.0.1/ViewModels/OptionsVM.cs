@@ -14,16 +14,29 @@ namespace ChessMultiplayer.ViewModels
         public OptionsVM()
         {
             ShowPrompt = true;
+            PurpleStyle = true;
         }
 
 
-        bool boardStyle;
-        public bool BoardStyle
+        bool purpleStyle;
+        public bool PurpleStyle
         {
-            get => boardStyle;
+            get => purpleStyle;
             set
             {
-                boardStyle = value;
+                purpleStyle = value;
+                OnPropertyChanged();
+                SetConverter();
+            }
+        }
+
+        bool seaStyle;
+        public bool SeaStyle
+        {
+            get => seaStyle;
+            set
+            {
+                seaStyle = value;
                 OnPropertyChanged();
                 SetConverter();
             }
@@ -43,7 +56,7 @@ namespace ChessMultiplayer.ViewModels
 
         void SetConverter()
         {
-            if (BoardStyle)
+            if (PurpleStyle)
             {
                 if (ShowPrompt)
                 {

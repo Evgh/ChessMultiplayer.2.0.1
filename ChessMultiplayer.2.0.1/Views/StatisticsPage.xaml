@@ -3,10 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChessMultiplayer.Views.StatisticsPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+
+            <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center">
+                <Label Text="Глобальная статистика:" HorizontalOptions="Start" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="Username" HorizontalOptions="Start"/>
+                    <Label Text="|"/>
+                    <Label Text="GamesAmount" HorizontalOptions="End"/>
+                </StackLayout>
+            </StackLayout>
+
+
+            <ScrollView HorizontalOptions="Center" Grid.Column="0" Grid.Row="1">
+                <CollectionView ItemsSource ="{Binding Statistics}" HorizontalOptions="Center">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="{Binding Username}" HorizontalOptions="Start"/>
+                                <Label Text="{Binding GamesAmount}" HorizontalOptions="End"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+
+
+
+            <StackLayout Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="Текущий пользователь:" HorizontalOptions="Center" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="{Binding User.UserId}" HorizontalOptions="Center"/>
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" Spacing="10">
+
+                <StackLayout HorizontalOptions="Center">
+                    <Label Text="Количество игр:" HorizontalOptions="Center"/>
+                    <Label Text="{Binding User.GamesAmount}" HorizontalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="Center">
+                    <Label Text="Средняя продолжительность игр" HorizontalOptions="Center"/>
+                    <Label Text="{Binding User.AverageLenth}" HorizontalOptions="Center"/>
+                </StackLayout>
+
+            </StackLayout>
+        </Grid>
+        
     </ContentPage.Content>
 </ContentPage>

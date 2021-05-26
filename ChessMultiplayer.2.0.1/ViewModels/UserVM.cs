@@ -49,8 +49,7 @@ namespace ChessMultiplayer.ViewModels
         public bool IsGuest => currentUser.IsNull();
         public bool IsAuthorized => !currentUser.IsNull();
         public string UserId => currentUser.Id ?? "Гость";
-
-
+       
         public ObservableCollection<Game> Games
         {
             get => currentUser.Games as ObservableCollection<Game>;
@@ -58,6 +57,24 @@ namespace ChessMultiplayer.ViewModels
             {
                 currentUser.Games = value;
                 OnPropertyChanged();
+                OnPropertyChanged("GamesAmount");
+            }
+        }
+        public int GamesAmount => Games.Count;
+        public int AverageLenth
+        {
+            get
+            {
+                int lenth = 0;
+                int count = 0;
+
+                foreach(var game in Games)
+                {
+                    lenth += game.Moves.Count;
+                    count++;
+                }
+
+                return count != 0 ? lenth / count : 0;
             }
         }
 
@@ -96,8 +113,19 @@ namespace ChessMultiplayer.ViewModels
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public void SaveCurrentGame()
+        {
+            if (!Games.Contains(GameViewModel.CurrentGame))
+            {
+                GameViewModel.CurrentGame.UserID = CurrentUser.Id;
+                Games.Add(GameViewModel.CurrentGame);
+            }
+            OnPropertyChanged("GamesAmount");
+            OnPropertyChanged("AverageLenth");
+        }
 
+
+        public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

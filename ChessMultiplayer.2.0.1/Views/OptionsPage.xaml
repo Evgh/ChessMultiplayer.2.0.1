@@ -4,7 +4,7 @@
              x:Class="ChessMultiplayer.Views.OptionsPage"
              xmlns:localControls="clr-namespace:ChessMultiplayer.Views.UserControls;assembly=ChessMultiplayer.2.0.1">
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="Center">
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
 
             <StackLayout Orientation="Horizontal">
                 <CheckBox IsChecked="{Binding Options.ShowPrompt, Mode=TwoWay}"/>
@@ -14,13 +14,10 @@
             <Label Text="Стиль доски"/>
             <StackLayout Orientation="Horizontal">
                 <Label Text="Purple"/>
-                <RadioButton IsChecked="{Binding Options.BoardStyle}"/>
+                <RadioButton IsChecked="{Binding Options.PurpleStyle, Mode=TwoWay}"/>
                 <Label Text="Sea"/>
-                <RadioButton/>
+                <RadioButton IsChecked="{Binding Options.SeaStyle}"/>
             </StackLayout>
-
-
-            <Button Text="Back" BindingContext="{Binding Navigation}" Command="{Binding ToMenuPage}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

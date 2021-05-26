@@ -81,10 +81,6 @@ namespace ChessMultiplayer.Services
                     context.Games.Add(game);
                 }
 
-                foreach (var move in context.Moves.Where(m => m.GameID == game.Id))
-                {
-                    context.Moves.Remove(move);
-                }
                 context.SaveChanges();
 
                 foreach (var move in game.Moves)
@@ -99,5 +95,20 @@ namespace ChessMultiplayer.Services
             }
             await context.SaveChangesAsync();
         }
+
+        public static ObservableCollection<UserStatistics> GetStatistics()
+        {
+            var collection = new ObservableCollection<UserStatistics>();
+
+            foreach (var user in context.Users)
+            {
+                int amount = context.Games.Where(g => g.UserID == user.Id).Count();
+
+                collection.Add(new UserStatistics() { Username = user.Id, GamesAmount = amount });
+            }
+
+            return collection;
+        }
+
     }
 }

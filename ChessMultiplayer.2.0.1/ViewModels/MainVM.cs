@@ -35,8 +35,20 @@ namespace ChessMultiplayer.ViewModels
             RegistrationCommand = new Command(async() => await Register());
             ObserveGameCommand = new Command(ObserveGame);
             ContinueGameCommand = new Command(ContinueGame);
+
+            Statistics = DatabaseWrap.GetStatistics();
         }
 
+        ObservableCollection<UserStatistics> statistics;
+        public ObservableCollection<UserStatistics> Statistics 
+        {
+            get => statistics;
+            set
+            {
+                statistics = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Command RegistrationCommand { get; protected set; }
         async Task Register()
@@ -48,7 +60,9 @@ namespace ChessMultiplayer.ViewModels
                 var user = DatabaseWrap.AutorizeUser(Registration.Login, Registration.Password);
                 User.CurrentUser = user;
                 Navigation.ToMenuPage?.Execute(null);
-            } 
+            }
+
+            Statistics = DatabaseWrap.GetStatistics();
         }
 
         public Command AutorizationCommand { get; protected set; }
@@ -60,10 +74,6 @@ namespace ChessMultiplayer.ViewModels
                 User.CurrentUser = user;
                 Autorization.InvalidAutorization = false;
                 Navigation.ToMenuPage?.Execute(null);
-
-                //User.SelectedGame = (user.Games as ObservableCollection<Game>)[0];
-                //User.SelectedObserveGame = (user.Games as ObservableCollection<Game>)[0];
-
             }
             else
             {
@@ -85,14 +95,10 @@ namespace ChessMultiplayer.ViewModels
                 return;
 
             Debug.WriteLine("SaveCommand Perform");
-
-            if (!User.Games.Contains(User.GameViewModel.CurrentGame))
-            {
-                User.GameViewModel.CurrentGame.UserID = User.CurrentUser.Id;
-                User.Games.Add(User.GameViewModel.CurrentGame);
-            }
+            User.SaveCurrentGame();
 
             await DatabaseWrap.UpdateGame(User.GameViewModel.CurrentGame);
+            Statistics = DatabaseWrap.GetStatistics();
         }
 
         public Command ObserveGameCommand { get; }
