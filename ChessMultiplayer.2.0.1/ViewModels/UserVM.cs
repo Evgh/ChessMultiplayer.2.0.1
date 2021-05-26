@@ -58,8 +58,12 @@ namespace ChessMultiplayer.ViewModels
                 currentUser.Games = value;
                 OnPropertyChanged();
                 OnPropertyChanged("GamesAmount");
+                OnPropertyChanged("AverageLenth");
+                OnPropertyChanged("NoGames");
+                OnPropertyChanged("HasGames");
             }
         }
+
         public int GamesAmount => Games.Count;
         public int AverageLenth
         {
@@ -77,6 +81,13 @@ namespace ChessMultiplayer.ViewModels
                 return count != 0 ? lenth / count : 0;
             }
         }
+
+        public bool NoGames
+        {
+            get => Games.Count == 0 && IsAuthorized; 
+        }
+
+        public bool HasGames => IsAuthorized && !NoGames;
 
         public Game SelectedGame
         {
