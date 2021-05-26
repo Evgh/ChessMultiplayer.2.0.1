@@ -4,7 +4,7 @@
              x:Class="ChessMultiplayer.Views.StatisticsPage">
     <ContentPage.Content>
 
-        <Grid>
+        <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="10*"/>
@@ -16,12 +16,16 @@
 
 
             <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Center">
-                <Label Text="Глобальная статистика:" HorizontalOptions="Start" />
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Username" HorizontalOptions="Start"/>
-                    <Label Text="|"/>
-                    <Label Text="GamesAmount" HorizontalOptions="End"/>
-                </StackLayout>
+                <Label Text="Глобальная статистика" HorizontalOptions="Center" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Аккаунт" Grid.Column="0"/>
+                    <Label Text="Кол-во игр" Grid.Column="1"/>
+                </Grid>
             </StackLayout>
 
 
@@ -29,15 +33,18 @@
                 <CollectionView ItemsSource ="{Binding Statistics}" HorizontalOptions="Center">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                <Label Text="{Binding Username}" HorizontalOptions="Start"/>
-                                <Label Text="{Binding GamesAmount}" HorizontalOptions="End"/>
-                            </StackLayout>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Username}" Grid.Column="0"/>
+                                <Label Text="{Binding GamesAmount}" Grid.Column="1"/>
+                            </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </ScrollView>
-
 
 
             <StackLayout Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
@@ -47,7 +54,9 @@
                 </StackLayout>
             </StackLayout>
 
-            <StackLayout Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" Spacing="10">
+            <Label Text="Войдите в аккаунт, чтобы увидеть личную статистику" Grid.Row="1" Grid.Column="1" IsVisible="{Binding User.IsGuest}" HorizontalOptions="Center"/>
+
+            <StackLayout Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" Spacing="10" IsVisible="{Binding User.IsAuthorized}">
 
                 <StackLayout HorizontalOptions="Center">
                     <Label Text="Количество игр:" HorizontalOptions="Center"/>
@@ -55,7 +64,7 @@
                 </StackLayout>
 
                 <StackLayout HorizontalOptions="Center">
-                    <Label Text="Средняя продолжительность игр" HorizontalOptions="Center"/>
+                    <Label Text="Средняя длительность игры в ходах" HorizontalOptions="Center"/>
                     <Label Text="{Binding User.AverageLenth}" HorizontalOptions="Center"/>
                 </StackLayout>
 

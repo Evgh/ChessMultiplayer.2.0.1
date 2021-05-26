@@ -6,7 +6,15 @@
     <ContentPage.Content>
         <StackLayout>
             
-            <Label Text="Зарегистрируйтесь, чтобы просмотреть список сохраненных игр" IsVisible="{Binding User.IsGuest}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <Label Text="Зарегистрируйтесь, чтобы просмотреть список сохраненных игр" 
+                   IsVisible="{Binding User.IsGuest}" 
+                   HorizontalOptions="CenterAndExpand" 
+                   VerticalOptions="CenterAndExpand"/>
+
+            <Label Text="Список игр пуст" 
+                   IsVisible="{Binding User.NoGames}"
+                   HorizontalOptions="CenterAndExpand" 
+                   VerticalOptions="CenterAndExpand"/>
 
             <ListView ItemsSource="{Binding User.Games}">
                 <ListView.ItemTemplate>

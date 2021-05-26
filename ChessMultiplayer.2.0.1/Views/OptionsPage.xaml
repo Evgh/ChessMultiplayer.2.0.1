@@ -13,9 +13,9 @@
 
             <Label Text="Стиль доски"/>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Purple"/>
+                <Label Text="Capcake"/>
                 <RadioButton IsChecked="{Binding Options.PurpleStyle, Mode=TwoWay}"/>
-                <Label Text="Sea"/>
+                <Label Text="Mermaid"/>
                 <RadioButton IsChecked="{Binding Options.SeaStyle}"/>
             </StackLayout>
         </StackLayout>
