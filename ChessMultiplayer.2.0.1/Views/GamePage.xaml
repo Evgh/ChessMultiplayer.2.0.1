@@ -38,7 +38,7 @@
                              HorizontalOptions="Center"
                              VerticalOptions="Start"
                              WidthRequest="{Binding Width, Source={x:Reference checkerBoard}}"
-                             BackgroundColor="Maroon">
+                             BackgroundColor="Gray">
 
                 <ScrollView x:Name="whiteScroll" Orientation="Horizontal" HorizontalScrollBarVisibility="Always">
 
@@ -72,7 +72,7 @@
                              HorizontalOptions="Center"
                              VerticalOptions="Start"
                              WidthRequest="{Binding Width, Source={x:Reference checkerBoard}}"
-                             BackgroundColor="Maroon">
+                             BackgroundColor="Gray">
 
                 <ScrollView x:Name="blackScroll" Orientation="Horizontal" HorizontalScrollBarVisibility="Always">
 

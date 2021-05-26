@@ -9,7 +9,7 @@ namespace ChessMultiplayer.Views
 {
     public class ProfessionalColorConverter : ColorConverter, IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public new object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var color = (PositionVM.CheckColor)value;
 

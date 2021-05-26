@@ -17,6 +17,18 @@ namespace ChessMultiplayer.ViewModels
         }
 
 
+        bool boardStyle;
+        public bool BoardStyle
+        {
+            get => boardStyle;
+            set
+            {
+                boardStyle = value;
+                OnPropertyChanged();
+                SetConverter();
+            }
+        }
+
         bool showPrompt;
         public bool ShowPrompt
         {
@@ -31,13 +43,27 @@ namespace ChessMultiplayer.ViewModels
 
         void SetConverter()
         {
-            if (ShowPrompt)
+            if (BoardStyle)
             {
-                App.Current.Resources["colorConverter"] = new ColorConverter();
+                if (ShowPrompt)
+                {
+                    App.Current.Resources["colorConverter"] = new ColorConverter();
+                }
+                else
+                {
+                    App.Current.Resources["colorConverter"] = new ProfessionalColorConverter();
+                }
             }
             else
             {
-                App.Current.Resources["colorConverter"] = new ProfessionalColorConverter();
+                if (ShowPrompt)
+                {
+                    App.Current.Resources["colorConverter"] = new ColorConverterD();
+                }
+                else
+                {
+                    App.Current.Resources["colorConverter"] = new ProfessionalColorConverterD();
+                }
             }
         }
 

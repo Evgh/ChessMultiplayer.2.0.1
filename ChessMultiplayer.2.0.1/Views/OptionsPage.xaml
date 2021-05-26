@@ -1,13 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ChessMultiplayer.Views.OptionsPage">
+             x:Class="ChessMultiplayer.Views.OptionsPage"
+             xmlns:localControls="clr-namespace:ChessMultiplayer.Views.UserControls;assembly=ChessMultiplayer.2.0.1">
     <ContentPage.Content>
-        <StackLayout>
-            <CheckBox IsChecked="{Binding Options.ShowPrompt, Mode=TwoWay}"/>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout HorizontalOptions="Center">
+
+            <StackLayout Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding Options.ShowPrompt, Mode=TwoWay}"/>
+                <Label Text="Подсвечивать, как ходят фигуры"/>
+            </StackLayout>
+
+            <Label Text="Стиль доски"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Purple"/>
+                <RadioButton IsChecked="{Binding Options.BoardStyle}"/>
+                <Label Text="Sea"/>
+                <RadioButton/>
+            </StackLayout>
+
 
             <Button Text="Back" BindingContext="{Binding Navigation}" Command="{Binding ToMenuPage}"/>
         </StackLayout>
