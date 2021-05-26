@@ -22,7 +22,7 @@ namespace ChessMultiplayer.ViewModels
             ToStatisticsPage = new Command(async () => await GoToStatisticsPage());
             ToSavedGamesPage = new Command(async () => await GoToSavedGamesPage());
             ToGameObserverPage = new Command(async () => await GoToGameObserverPage());
-            //ToPreviousPage = new Command(async () => await GotoPreviousPage());
+            ToPreviousPage = new Command(async () => await GotoPreviousPage());
 
             ToAutorization = new Command(async () => await GoToAutorization());
             ToRegistration = new Command(async () => await GoToRegistration());
@@ -35,7 +35,7 @@ namespace ChessMultiplayer.ViewModels
         public Command ToStatisticsPage { get; protected set; }
         public Command ToSavedGamesPage { get; protected set; }
         public Command ToGameObserverPage { get; protected set; }
-        //public Command ToPreviousPage { get; protected set; }
+        public Command ToPreviousPage { get; protected set; }
 
 
         public Command ToAutorization { get; protected set; }
@@ -80,10 +80,10 @@ namespace ChessMultiplayer.ViewModels
             await Navigation.PushAsync(ViewFabric.CreateWatchSavedGamePage());
         }
 
-        //async Task GotoPreviousPage()
-        //{
-        //    await Navigation.PopModalAsync();
-        //}
+        async Task GotoPreviousPage()
+        {
+            await Navigation.PopAsync();
+        }
 
 
         async Task GoToAutorization()

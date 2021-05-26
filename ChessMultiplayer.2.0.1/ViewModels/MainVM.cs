@@ -59,7 +59,7 @@ namespace ChessMultiplayer.ViewModels
             {
                 var user = DatabaseWrap.AutorizeUser(Registration.Login, Registration.Password);
                 User.CurrentUser = user;
-                Navigation.ToMenuPage?.Execute(null);
+                Navigation.ToPreviousPage.Execute(null);
             }
 
             Statistics = DatabaseWrap.GetStatistics();
@@ -73,7 +73,7 @@ namespace ChessMultiplayer.ViewModels
             {
                 User.CurrentUser = user;
                 Autorization.InvalidAutorization = false;
-                Navigation.ToMenuPage?.Execute(null);
+                Navigation.ToPreviousPage.Execute(null);
             }
             else
             {
@@ -112,7 +112,8 @@ namespace ChessMultiplayer.ViewModels
         void ContinueGame()
         {
             User.GameViewModel.CurrentGame = User.GameObserverViewModel.CurrentGame;
-            Navigation.ToMenuPage.Execute(null);
+            Navigation.ToPreviousPage.Execute(null);
+            Navigation.ToPreviousPage.Execute(null);
             Navigation.ToGamePage.Execute(null);
         }
 
