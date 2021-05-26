@@ -18,11 +18,6 @@ namespace ChessMultiplayer.Views.UserControls
                                                                                      typeof(Check),
                                                                                      null);
 
-        public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color",
-                                                                             typeof(ColorConverter),
-                                                                             typeof(Check),
-                                                                             null);
-
         public Check()
         {
             InitializeComponent();
@@ -39,18 +34,6 @@ namespace ChessMultiplayer.Views.UserControls
             get
             {
                 return (PositionVM)GetValue(PositionProperty);
-            }
-        }
-
-        public ColorConverter Color
-        {
-            set
-            {
-                SetValue(ColorProperty, value);
-            }
-            get
-            {
-                return (ColorConverter)GetValue(ColorProperty);
             }
         }
     }

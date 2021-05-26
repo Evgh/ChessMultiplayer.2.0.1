@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             
-            <Label Text="Зарегистрируйтесь, чтобы просмотреть список сохраненных игр" 
+            <Label Text="Войдите в аккаунт, чтобы увидеть список сохраненных игр" 
                    IsVisible="{Binding User.IsGuest}" 
                    HorizontalOptions="CenterAndExpand" 
                    VerticalOptions="Center"/>

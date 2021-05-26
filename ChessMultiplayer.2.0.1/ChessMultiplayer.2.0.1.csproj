@@ -38,9 +38,6 @@
     <EmbeddedResource Update="Views\SavedGamesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\StartGamePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\StatisticsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

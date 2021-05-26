@@ -19,7 +19,6 @@ namespace ChessMultiplayer.Views
         }
 
         public Page CreateMenuPage() => new MenuPage() { BindingContext = bindingContext};
-        public Page CreateStartGamePage() => new StartGamePage() { BindingContext = bindingContext };
         public Page CreateOptionsPage() => new OptionsPage() { BindingContext = bindingContext };
         public Page CreateStatisticsPage() => new StatisticsPage() { BindingContext = bindingContext };
         public Page CreateSavedGamesPage() => new SavedGamesPage() { BindingContext = bindingContext };

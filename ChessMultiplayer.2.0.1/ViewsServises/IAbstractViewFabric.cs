@@ -8,7 +8,6 @@ namespace ChessMultiplayer.Views
     public interface IAbstractViewFabric
     {
         Page CreateMenuPage();
-        Page CreateStartGamePage();
         Page CreateGamePage();
         Page CreateOptionsPage();
         Page CreateStatisticsPage();

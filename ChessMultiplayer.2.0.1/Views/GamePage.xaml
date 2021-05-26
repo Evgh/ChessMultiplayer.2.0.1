@@ -5,10 +5,6 @@
              xmlns:localControls="clr-namespace:ChessMultiplayer.Views.UserControls;assembly=ChessMultiplayer.2.0.1"
              x:Class="ChessMultiplayer.Views.GamePage">
 
-    <ContentPage.Resources>
-        <local:MoveParameterToIntConverter x:Key="moveParToInt"/>
-    </ContentPage.Resources>
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Order="Primary" Icon="iconsNew.png" Text="New" Priority="0" Command="{Binding User.NewGameCommand}"/>
         <ToolbarItem Order="Primary" Icon="iconsSave.png" Text="Save" Priority="0" Command="{Binding SaveCommand}"/>
@@ -30,9 +26,12 @@
                 <OnPlatform x:TypeArguments="x:Double" Android="0"/>
             </Grid.ColumnSpacing>
 
-            <Label Text="Гость" HorizontalOptions="Center" VerticalOptions="End" Grid.Row="0"/>
-            <Label Text="{Binding User.UserId}" HorizontalOptions="Center" VerticalOptions="End" Grid.Row="4"/>
-            
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0">
+                <Label Text="Текущий аккаунт: "/>
+                <Label Text="{Binding User.UserId}"/>
+            </StackLayout>
+
             <StackLayout x:Name="deadWhitesStack" Grid.Row="1"
                              Orientation="Vertical" 
                              HorizontalOptions="Center"

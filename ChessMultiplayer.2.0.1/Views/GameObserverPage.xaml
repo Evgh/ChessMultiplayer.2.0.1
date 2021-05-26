@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChessMultiplayer.Views.GameObserverPage"
-             xmlns:local="clr-namespace:ChessMultiplayer.Views;assembly=ChessMultiplayer.2.0.1"             
+             xmlns:converters="clr-namespace:ChessMultiplayer.Views.Converters;assembly=ChessMultiplayer.2.0.1"             
              xmlns:localControls="clr-namespace:ChessMultiplayer.Views.UserControls;assembly=ChessMultiplayer.2.0.1">
     
     <ContentPage.Resources>
-        <local:MoveParameterToIntConverter x:Key="moveParToInt"/>
+        <converters:MoveParameterToIntConverter x:Key="moveParToInt"/>
     </ContentPage.Resources>
 
     
@@ -89,27 +89,27 @@
             </StackLayout>
 
 
-            <StackLayout  Grid.Row="4" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                
-                <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
+            <Grid Grid.Row="4" HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-                    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
-                        <Label Text="За белых: "/>
-                        <Label Text="{Binding User.UserId}"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Horizontal" VerticalOptions="End">
-                        <Label Text="За черных: "/>
-                        <Label Text="Гость" />
-                    </StackLayout>
+                <StackLayout HorizontalOptions="Start"
+                             VerticalOptions="Center" 
+                             Grid.Column="0"
+                             Orientation="Horizontal">
+                    <Label Text="Текущий аккаунт: "/>
+                    <Label Text="{Binding User.UserId}"/>
                 </StackLayout>
 
                 <Button HorizontalOptions="End"
                         VerticalOptions="CenterAndExpand"
+                        Grid.Column="1"
                         Text="Продолжить игру" 
                         Command="{Binding ContinueGameCommand}"/>
-                
-            </StackLayout>
+
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

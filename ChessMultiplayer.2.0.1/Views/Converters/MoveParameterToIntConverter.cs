@@ -6,7 +6,7 @@ using System.Diagnostics;
 using Xamarin.Forms;
 using ChessMultiplayer.Models;
 
-namespace ChessMultiplayer.Views
+namespace ChessMultiplayer.Views.Converters
 {
     class MoveParameterToIntConverter : IValueConverter
     {

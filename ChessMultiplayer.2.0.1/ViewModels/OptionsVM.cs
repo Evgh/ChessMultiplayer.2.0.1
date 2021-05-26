@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using ChessMultiplayer._2._0._1;
-using ChessMultiplayer.Views;
+using ChessMultiplayer.Views.Converters;
 
 namespace ChessMultiplayer.ViewModels
 {
@@ -56,29 +56,36 @@ namespace ChessMultiplayer.ViewModels
 
         void SetConverter()
         {
+            var currentStatus = GetCurrentStatus();
+            App.Current.Resources["colorConverter"] = ColorConverterFabric.GetColorConverter(currentStatus);
+        }
+
+        ColorConverterFabric.ColorConverter GetCurrentStatus()
+        {
             if (PurpleStyle)
             {
                 if (ShowPrompt)
                 {
-                    App.Current.Resources["colorConverter"] = new ColorConverter();
+                    return ColorConverterFabric.ColorConverter.Capcake;
                 }
                 else
                 {
-                    App.Current.Resources["colorConverter"] = new ProfessionalColorConverter();
+                    return ColorConverterFabric.ColorConverter.CapcakePro;
                 }
             }
             else
             {
                 if (ShowPrompt)
                 {
-                    App.Current.Resources["colorConverter"] = new ColorConverterD();
+                    return ColorConverterFabric.ColorConverter.Mermaid;
                 }
                 else
                 {
-                    App.Current.Resources["colorConverter"] = new ProfessionalColorConverterD();
+                    return ColorConverterFabric.ColorConverter.MermaidPro;
                 }
             }
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
