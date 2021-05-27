@@ -31,7 +31,6 @@ namespace ChessMultiplayer.ViewModels
         {
             positionsManager = new ChessPositionsManager(PressCommand);
             positionsManager.GameEnds += OnGameEnds;
-            positionsManager.Check += OnCheck;
 
             historyManager = new HistoryManager(positionsManager);
         }
@@ -41,16 +40,10 @@ namespace ChessMultiplayer.ViewModels
             get => positionsManager[i, j];
         }
 
-        async void OnGameEnds(object sender, EventArgs e)
+        async protected virtual void OnGameEnds(object sender, EventArgs e)
         {
             Vibration.Vibrate();
             await Application.Current.MainPage.DisplayAlert("Король повержен", "Игра окончена", "Ok");
-        }
-
-        protected void OnCheck(object sender, EventArgs e)
-        {
-            Debug.WriteLine("Check");
-            Vibration.Vibrate();
         }
 
         #region Properties

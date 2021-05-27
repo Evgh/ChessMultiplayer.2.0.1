@@ -11,5 +11,10 @@ namespace ChessMultiplayer.ViewModels
     {
         Command pressCommand;
         public override Command PressCommand => pressCommand ?? (pressCommand = new Command(() => { }));
+
+        protected override void OnGameEnds(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

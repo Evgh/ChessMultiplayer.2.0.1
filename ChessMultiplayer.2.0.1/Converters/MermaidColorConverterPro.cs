@@ -11,6 +11,12 @@ namespace ChessMultiplayer.Converters
         {
             var color = (PositionVM.CheckColor)value;
 
+            switch (color.State)
+            {
+                case PositionVM.CheckState.Selected: return Color.Gold;
+                case PositionVM.CheckState.Check: return Color.Coral;
+            }
+
             if (color.Type == PositionVM.CheckType.White)
             {
                 switch (color.State)
@@ -30,12 +36,6 @@ namespace ChessMultiplayer.Converters
                     case PositionVM.CheckState.Evolutionate: return Color.Navy;
                     case PositionVM.CheckState.Сastling: return Color.Navy;
                 }
-            }
-
-            switch (color.State) 
-            {
-                case PositionVM.CheckState.Selected: return Color.Gold;
-                case PositionVM.CheckState.Check: return Color.Coral;
             }
 
             return Color.Default;
