@@ -18,10 +18,10 @@ namespace ChessMultiplayer.Converters
                 switch (color.State)
                 {
                     case PositionVM.CheckState.Simple: return Color.PeachPuff;
-                    case PositionVM.CheckState.Selected: return Color.LimeGreen;
                     case PositionVM.CheckState.CanMove: return Color.PeachPuff;
                     case PositionVM.CheckState.CanBeat: return Color.PeachPuff;
-                    case PositionVM.CheckState.Check: return Color.Coral;
+                    case PositionVM.CheckState.Evolutionate: return Color.PeachPuff;
+                    case PositionVM.CheckState.Сastling: return Color.PeachPuff;
                 }
             }
             else
@@ -29,13 +29,19 @@ namespace ChessMultiplayer.Converters
                 switch (color.State)
                 {
                     case PositionVM.CheckState.Simple: return Color.Purple;
-                    case PositionVM.CheckState.Selected: return Color.LimeGreen;
                     case PositionVM.CheckState.CanMove: return Color.Purple;
                     case PositionVM.CheckState.CanBeat: return Color.Purple;
-                    case PositionVM.CheckState.Check: return Color.Coral;
-
+                    case PositionVM.CheckState.Evolutionate: return Color.PeachPuff;
+                    case PositionVM.CheckState.Сastling: return Color.PeachPuff;
                 }
             }
+
+            switch (color.State)
+            {
+                case PositionVM.CheckState.Selected: return Color.LimeGreen;
+                case PositionVM.CheckState.Check: return Color.Coral;
+            }
+
             return Color.Default;
         }
 

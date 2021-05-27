@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using ChessMultiplayer.Models;
 using ChessMultiplayer.Services;
 using ChessMultiplayer.ViewModels.GameLogic;
+using Xamarin.Essentials;
 
 namespace ChessMultiplayer.ViewModels
 {
@@ -29,12 +30,27 @@ namespace ChessMultiplayer.ViewModels
         void InitializeManagers()
         {
             positionsManager = new ChessPositionsManager(PressCommand);
+            positionsManager.GameEnds += OnGameEnds;
+            positionsManager.Check += OnCheck;
+
             historyManager = new HistoryManager(positionsManager);
         }
 
         public PositionVM this[int i, int j]
         {
             get => positionsManager[i, j];
+        }
+
+        async void OnGameEnds(object sender, EventArgs e)
+        {
+            Vibration.Vibrate();
+            await Application.Current.MainPage.DisplayAlert("Король повержен", "Игра окончена", "Ok");
+        }
+
+        protected void OnCheck(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Check");
+            Vibration.Vibrate();
         }
 
         #region Properties
@@ -59,7 +75,7 @@ namespace ChessMultiplayer.ViewModels
             {
                 game = value;
 
-                ResetManagers(); 
+                ResetManagers();
                 MoveHistory = new ObservableCollection<MoveParameters>(game.Moves);
 
                 OnPropertyChanged("LastMove");
@@ -176,7 +192,7 @@ namespace ChessMultiplayer.ViewModels
                             DidSomeoneDied = didSomeoneDied
                         };
 
-                        historyManager.Do(moveParameters);
+                        historyManager.Do(moveParameters);                       
                     } break;
             }
         }

@@ -26,11 +26,14 @@ namespace ChessMultiplayer.ViewModels.GameLogic
 
             DeadBlacks = new ObservableCollection<IFigure>();
             DeadWhites = new ObservableCollection<IFigure>();
+            
+            GameEnds += OnGameEnds;
 
             InitializePositions();
             InitializeFigures();
 
             IsWhiteMove = true;
+            IsGameEnded = false;
         }
 
         public PositionVM this[int i, int j]
@@ -39,6 +42,15 @@ namespace ChessMultiplayer.ViewModels.GameLogic
         }
 
         bool IsWhiteMove { get; set; }
+        bool IsGameEnded { get; set; }
+        
+        public event EventHandler GameEnds;
+        protected void OnGameEnds(object sender, EventArgs e)
+        {
+            IsGameEnded = true;
+        }
+
+        public event EventHandler Check;
 
         #region Properties
         public PositionVM SelectedPosition
@@ -71,8 +83,6 @@ namespace ChessMultiplayer.ViewModels.GameLogic
         #endregion
 
 
-
-
         #region ICanDoUndo Logic
         public void Do(MoveParameters moveParameters)
         {
@@ -90,6 +100,10 @@ namespace ChessMultiplayer.ViewModels.GameLogic
 
             targetPosition.Figure = startPosition.Figure;
             startPosition.Figure = null;
+
+            if (whiteKingPosition == targetPosition || blackKingPosition == targetPosition)
+                GameEnds.Invoke(this, null);
+
 
             whiteKingPosition = (startPosition == whiteKingPosition) ? targetPosition : whiteKingPosition;
             blackKingPosition = (startPosition == blackKingPosition) ? targetPosition : blackKingPosition;
@@ -122,24 +136,35 @@ namespace ChessMultiplayer.ViewModels.GameLogic
                 targetPosition.Figure = null;
             }
 
-            whiteKingPosition = (targetPosition == whiteKingPosition) ? startPosition : whiteKingPosition;
-            blackKingPosition = (targetPosition == blackKingPosition) ? startPosition : blackKingPosition;
 
-            RemoveSelection();
+            if (IsGameEnded)
+            {
+                IsGameEnded = false;
+            }
+            else
+            {
+                whiteKingPosition = (targetPosition == whiteKingPosition) ? startPosition : whiteKingPosition;
+                blackKingPosition = (targetPosition == blackKingPosition) ? startPosition : blackKingPosition;
+            }
+
             IsWhiteMove = !IsWhiteMove;
+            RemoveSelection();
+            
         }
         #endregion
 
         #region Initialization
         public void StartNewGame()
         {
-            RemoveSelection();
             RemoveFigures();
             DeadBlacks.Clear();
             DeadWhites.Clear();
 
             InitializeFigures();
+            RemoveSelection();
+
             IsWhiteMove = true;
+            IsGameEnded = false;
         }
 
         void InitializePositions()
@@ -230,16 +255,6 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             }
 
             IsCheck();
-            //if (IsKingReallySafe(FigureColor.White) == false)
-            //{
-            //    whiteKingPosition.State = PositionVM.CheckState.CanBeat;
-            //}
-
-            //if (IsKingReallySafe(FigureColor.Black) == false)
-            //{
-            //    blackKingPosition.State = PositionVM.CheckState.CanBeat;
-            //}
-
         }
 
         public void DrawMoveOpportunities()
@@ -263,9 +278,13 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             }
         }
 
+
         bool CanMove()
         {
-            return IsWhiteMove ? SelectedPosition.Figure.FigureColor == FigureColor.White : SelectedPosition.Figure.FigureColor == FigureColor.Black;
+            if (!IsGameEnded)
+                return IsWhiteMove ? SelectedPosition.Figure.FigureColor == FigureColor.White : SelectedPosition.Figure.FigureColor == FigureColor.Black;
+            else
+                return false;
         }
 
         PositionVM PawnMovement()
@@ -433,19 +452,18 @@ namespace ChessMultiplayer.ViewModels.GameLogic
 
         // Проверки на безопасность короля, которые пока работают криво. 
         #region Validation is king safe
-       
-         enum Check { Empty, EndBoard, Ally, Enemy };
-
         void IsCheck()
         {
             if (DiagonalCheck(whiteKingPosition) || StraightCheck(whiteKingPosition) || PawnCheck(whiteKingPosition) || KnightCheck(whiteKingPosition) || KingCheck(whiteKingPosition)) 
             {
                 whiteKingPosition.State = PositionVM.CheckState.Check;
+                Check?.Invoke(this, null);
             }
 
             if (DiagonalCheck(blackKingPosition) || StraightCheck(blackKingPosition) || PawnCheck(blackKingPosition) || KnightCheck(blackKingPosition) || KingCheck(blackKingPosition)) 
             {
                 blackKingPosition.State = PositionVM.CheckState.CanBeat;
+                Check?.Invoke(this, null);
             }
         }
 

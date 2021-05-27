@@ -12,7 +12,7 @@ namespace ChessMultiplayer.ViewModels
     public class PositionVM : INotifyPropertyChanged
     {
         public enum CheckType { White, Black }
-        public enum CheckState { Simple, Selected, CanMove, CanBeat, Check, Checkmate}
+        public enum CheckState { Simple, Selected, CanMove, CanBeat, Check, Checkmate, Evolutionate, Сastling}
 
         public class CheckColor 
         { 
