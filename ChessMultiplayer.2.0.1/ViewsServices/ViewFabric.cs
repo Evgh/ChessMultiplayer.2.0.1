@@ -13,6 +13,14 @@ namespace ChessMultiplayer.Views.ViewsServices
             bindingContext = context;
         }
 
+        public ViewModels.MainVM MainVM
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public void SetBindingContext(object context)
         {
             bindingContext = context;

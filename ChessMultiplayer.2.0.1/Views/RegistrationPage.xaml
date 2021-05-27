@@ -10,7 +10,7 @@
         </Grid.ColumnDefinitions>
 
         <StackLayout VerticalOptions="Center" Grid.Column="1">
-            <Label Text="Пользователь с данным логином уже существует!" IsVisible="{Binding Registration.InvalidValidation}"/>
+            <Label Text="Данный логин уже занят" IsVisible="{Binding Registration.InvalidValidation}"/>
 
             <Label Text="Логин:"/>
             <Entry Text="{Binding Registration.Login}"/>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ChessMultiplayer.ViewModels.NavigationVM" BaseTypeListCollapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEEAAAgAQAEIAAACIABEAIAAgAgAAAAkAAAxAgRAQCA=</HashCode>
+      <FileName>ViewModels\NavigationVM.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ViewFabric1" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ChessMultiplayer.Views.ViewsServices.ViewFabric" BaseTypeListCollapsed="true">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <AssociationLine Name="MainVM" Type="ChessMultiplayer.ViewModels.MainVM" ManuallyRouted="true">
+      <Path>
+        <Point X="8" Y="3.338" />
+        <Point X="6.971" Y="3.338" />
+        <Point X="6.971" Y="6.67" />
+        <Point X="3.25" Y="6.67" />
+        <Point X="3.25" Y="6.42" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAARAIAAAAAEAABAMAAAAgABAAAAQA=</HashCode>
+      <FileName>ViewsServices\ViewFabric.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MainVM" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ChessMultiplayer.ViewModels.MainVM" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAACAAAABAcMAAAJAIAkAABAEQAAAAAAABEQIQ=</HashCode>
+      <FileName>ViewModels\MainVM.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="NavigationVM" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

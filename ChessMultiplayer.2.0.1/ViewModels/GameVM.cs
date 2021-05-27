@@ -42,7 +42,14 @@ namespace ChessMultiplayer.ViewModels
 
         async protected virtual void OnGameEnds(object sender, EventArgs e)
         {
-            Vibration.Vibrate();
+            try
+            {
+                Vibration.Vibrate();
+            }
+            catch
+            {
+                Debug.WriteLine("Uwp cant vibrate");
+            }
             await Application.Current.MainPage.DisplayAlert("Король повержен", "Игра окончена", "Ok");
         }
 
@@ -205,6 +212,22 @@ namespace ChessMultiplayer.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+        }
+
+        public ChessPositionsManager ChessPositionsManager
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public HistoryManager HistoryManager
+        {
+            get => default;
+            set
+            {
+            }
         }
     }
 }

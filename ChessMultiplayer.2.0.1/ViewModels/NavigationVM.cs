@@ -102,5 +102,13 @@ namespace ChessMultiplayer.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
+
+        public ViewFabric ViewFabric1
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

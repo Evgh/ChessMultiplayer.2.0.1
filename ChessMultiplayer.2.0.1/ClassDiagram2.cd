@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="0..1">
+    <Position X="12.799" Y="2.383" Height="0.291" Width="0.7" />
+  </Comment>
+  <Comment CommentText="1">
+    <Position X="11.845" Y="2.417" Height="0.291" Width="0.7" />
+  </Comment>
+  <Class Name="ChessMultiplayer.ViewModels.GameLogic.ChessPositionsManager">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAkYGChAlBEgBABBCAIAIAAATECARIQACEAQAQBAIAM=</HashCode>
+      <FileName>ViewModels\GameLogic\ChessPositionManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PositionVM" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ChessMultiplayer.ViewModels.GameLogic.HistoryManager">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAACAAAAAAAAAAAIAAAAQBAiAIAEBACCAIAAAgCAAA=</HashCode>
+      <FileName>ViewModels\GameLogic\HistoryManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ChessPositionsManager" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ChessMultiplayer.ViewModels.GameVM">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="ChessMultiplayer.ViewModels.GameVM.GameState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ViewModels\GameVM.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AUgQGAAAABgAAAAAKAAAAAgAgIIAIAAIQEAAAAAKAEA=</HashCode>
+      <FileName>ViewModels\GameVM.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ChessPositionsManager" />
+      <Property Name="HistoryManager" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ChessMultiplayer.ViewModels.PositionVM">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="ChessMultiplayer.ViewModels.PositionVM.CheckType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ViewModels\PositionVM.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="ChessMultiplayer.ViewModels.PositionVM.CheckState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ViewModels\PositionVM.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Class Name="ChessMultiplayer.ViewModels.PositionVM.CheckColor" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ViewModels\PositionVM.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIABAAIACwAABEgCEARAAhAAIAAA=</HashCode>
+      <FileName>ViewModels\PositionVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

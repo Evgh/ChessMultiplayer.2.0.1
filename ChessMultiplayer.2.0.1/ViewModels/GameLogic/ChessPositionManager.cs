@@ -462,7 +462,7 @@ namespace ChessMultiplayer.ViewModels.GameLogic
 
             if (DiagonalCheck(blackKingPosition) || StraightCheck(blackKingPosition) || PawnCheck(blackKingPosition) || KnightCheck(blackKingPosition) || KingCheck(blackKingPosition)) 
             {
-                blackKingPosition.State = PositionVM.CheckState.CanBeat;
+                blackKingPosition.State = PositionVM.CheckState.Check;
                 Check?.Invoke(this, null);
             }
         }
@@ -663,5 +663,13 @@ namespace ChessMultiplayer.ViewModels.GameLogic
         }
 
         #endregion
+
+        public PositionVM PositionVM
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

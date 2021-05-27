@@ -37,6 +37,13 @@ namespace ChessMultiplayer.ViewModels
             ContinueGameCommand = new Command(ContinueGame);
 
             Statistics = DatabaseWrap.GetStatistics();
+
+            Autorization.Login = "";
+            Autorization.Password = "";
+            Autorization.InvalidAutorization = false;
+            Registration.Login = "";
+            Registration.Password = "";
+            Registration.InvalidValidation = false;
         }
 
         ObservableCollection<UserStatistics> statistics;
@@ -53,31 +60,78 @@ namespace ChessMultiplayer.ViewModels
         public Command RegistrationCommand { get; protected set; }
         async Task Register()
         {
-            Registration.InvalidValidation = ! await DatabaseWrap.RegisterUserAsync(Registration.Login, Registration.Password);
 
-            if (!Registration.InvalidValidation)
+            if (Registration.Login == "" || Registration.Login == null)
             {
-                var user = DatabaseWrap.AutorizeUser(Registration.Login, Registration.Password);
-                User.CurrentUser = user;
-                Navigation.ToPreviousPage.Execute(null);
+                await Application.Current.MainPage.DisplayAlert("Ошибка регистрации", "Введите логин", "Ok");
+                return;
+            }
+            if (Registration.Login.Length > 50)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка регистрации", "Логин слишком длинный", "Ok");
+                return;
             }
 
-            Statistics = DatabaseWrap.GetStatistics();
+            if (Registration.Password == "" || Registration.Password == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка регистрации", "Введите пароль", "Ok");
+                return;
+            }
+            if (Registration.Password.Length > 30)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка регистрации", "Пароль слишком длинный", "Ok");
+                return;
+            }
+
+            try
+            {
+                Registration.InvalidValidation = !await DatabaseWrap.RegisterUserAsync(Registration.Login, Registration.Password);
+
+                if (!Registration.InvalidValidation)
+                {
+                    var user = DatabaseWrap.AutorizeUser(Registration.Login, Registration.Password);
+                    User.CurrentUser = user;
+                    Navigation.ToPreviousPage.Execute(null);
+                }
+
+                Statistics = DatabaseWrap.GetStatistics();
+            }
+            catch(Exception e)
+            {
+                Registration.InvalidValidation = true;
+                Debug.WriteLine(e.Message);
+            }
+
         }
 
         public Command AutorizationCommand { get; protected set; }
         void Autorize()
         {
-            var user = DatabaseWrap.AutorizeUser(Autorization.Login, Autorization.Password);
-            if (user != null)
+            try
             {
-                User.CurrentUser = user;
-                Autorization.InvalidAutorization = false;
-                Navigation.ToPreviousPage.Execute(null);
+                var user = DatabaseWrap.AutorizeUser(Autorization.Login, Autorization.Password);
+                if (user != null)
+                {
+                    User.CurrentUser = user;
+                    Autorization.InvalidAutorization = false;
+                    Navigation.ToPreviousPage.Execute(null);
+
+                    Autorization.Login = "";
+                    Autorization.Password = "";
+                    Autorization.InvalidAutorization = false;
+                    Registration.Login = "";
+                    Registration.Password = "";
+                    Registration.InvalidValidation = false;
+                }
+                else
+                {
+                    Autorization.InvalidAutorization = true;
+                }
             }
-            else
+            catch (Exception e)
             {
                 Autorization.InvalidAutorization = true;
+                Debug.WriteLine(e.Message);
             }
         }
 
@@ -85,6 +139,14 @@ namespace ChessMultiplayer.ViewModels
         private void Logout()
         {
             User.CurrentUser = new Models.User();
+
+            Autorization.Login = "";
+            Autorization.Password = "";
+            Autorization.InvalidAutorization = false;
+            Registration.Login = "";
+            Registration.Password = "";
+            Registration.InvalidValidation = false;
+
             Debug.WriteLine("Logout");
         }
 
@@ -94,27 +156,48 @@ namespace ChessMultiplayer.ViewModels
             if (User.CurrentUser.IsNull())
                 return;
 
-            Debug.WriteLine("SaveCommand Perform");
-            User.SaveCurrentGame();
+            try
+            {
+                Debug.WriteLine("SaveCommand Perform");
+                User.SaveCurrentGame();
 
-            await DatabaseWrap.UpdateGame(User.GameViewModel.CurrentGame);
+                await DatabaseWrap.UpdateGame(User.GameViewModel.CurrentGame);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
             Statistics = DatabaseWrap.GetStatistics();
         }
 
         public Command ObserveGameCommand { get; }
         void ObserveGame(object parameter)
         {
-            User.GameObserverViewModel.CurrentGame = parameter as Game;
-            Navigation.ToGameObserverPage.Execute(null);
+            try
+            {
+                User.GameObserverViewModel.CurrentGame = parameter as Game;
+                Navigation.ToGameObserverPage.Execute(null);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         public Command ContinueGameCommand { get; }
         void ContinueGame()
         {
-            User.GameViewModel.CurrentGame = User.GameObserverViewModel.CurrentGame;
-            Navigation.ToPreviousPage.Execute(null);
-            Navigation.ToPreviousPage.Execute(null);
-            Navigation.ToGamePage.Execute(null);
+            try
+            {
+                User.GameViewModel.CurrentGame = User.GameObserverViewModel.CurrentGame;
+                Navigation.ToPreviousPage.Execute(null);
+                Navigation.ToPreviousPage.Execute(null);
+                Navigation.ToGamePage.Execute(null);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

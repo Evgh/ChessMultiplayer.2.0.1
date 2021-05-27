@@ -159,5 +159,13 @@ namespace ChessMultiplayer.ViewModels.GameLogic
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
+
+        public ChessPositionsManager ChessPositionsManager
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }
