@@ -91,8 +91,11 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             targetPosition.Figure = startPosition.Figure;
             startPosition.Figure = null;
 
-            SelectedPosition = null;
+            whiteKingPosition = (startPosition == whiteKingPosition) ? targetPosition : whiteKingPosition;
+            blackKingPosition = (startPosition == blackKingPosition) ? targetPosition : blackKingPosition;
 
+            SelectedPosition = null;
+            RemoveSelection();
             IsWhiteMove = !IsWhiteMove;
         }
 
@@ -118,6 +121,11 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             {
                 targetPosition.Figure = null;
             }
+
+            whiteKingPosition = (targetPosition == whiteKingPosition) ? startPosition : whiteKingPosition;
+            blackKingPosition = (targetPosition == blackKingPosition) ? startPosition : blackKingPosition;
+
+            RemoveSelection();
             IsWhiteMove = !IsWhiteMove;
         }
         #endregion
@@ -220,6 +228,8 @@ namespace ChessMultiplayer.ViewModels.GameLogic
                     pos.State = PositionVM.CheckState.Simple;
                 }
             }
+
+            IsCheck();
             //if (IsKingReallySafe(FigureColor.White) == false)
             //{
             //    whiteKingPosition.State = PositionVM.CheckState.CanBeat;
@@ -247,6 +257,10 @@ namespace ChessMultiplayer.ViewModels.GameLogic
                 }
                 SelectedPosition.State = PositionVM.CheckState.Selected;
             }
+            else
+            {
+                SelectedPosition = null;
+            }
         }
 
         bool CanMove()
@@ -266,7 +280,7 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             // удар вправо
             if (IsCoordinatesCorrect(row + direction, col + 1))
             {
-                if (positions[row + direction][col + 1].Figure != null && IsKingSafe(row + direction, col + 1))
+                if (positions[row + direction][col + 1].Figure != null)
                 {
                     if (positions[row + direction][col + 1].Figure.FigureColor != SelectedPosition.Figure.FigureColor)
                         positions[row + direction][col + 1].State = PositionVM.CheckState.CanBeat;
@@ -276,7 +290,7 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             // удар влево
             if (IsCoordinatesCorrect(row + direction, col - 1))
             {
-                if (positions[row + direction][col - 1].Figure != null && IsKingSafe(row + direction, col - 1))
+                if (positions[row + direction][col - 1].Figure != null)
                 {
                     if (positions[row + direction][col - 1].Figure.FigureColor != SelectedPosition.Figure.FigureColor)
                         positions[row + direction][col - 1].State = PositionVM.CheckState.CanBeat;
@@ -284,9 +298,9 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             }
 
             // обычный ход
-            if (IsCoordinatesCorrect(row + direction, col) && IsKingSafe(row + direction, col))
+            if (IsCoordinatesCorrect(row + direction, col))
             {
-                if (positions[row + direction][col].Figure == null && IsKingSafe(row + direction, col))
+                if (positions[row + direction][col].Figure == null)
                 {
                     positions[row + direction][col].State = PositionVM.CheckState.CanMove;
                 }
@@ -296,7 +310,7 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             {
                 if (IsCoordinatesCorrect(row + direction * 2, col))
                 {
-                    if (positions[row + direction * 2][col].Figure == null && IsKingSafe(row + direction * 2, col))
+                    if (positions[row + direction * 2][col].Figure == null)
                     {
                         positions[row + direction * 2][col].State = PositionVM.CheckState.CanMove;
                     }
@@ -356,8 +370,6 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             ShortMovement(SelectedPosition.Row, SelectedPosition.Column, 1, -1);
             ShortMovement(SelectedPosition.Row, SelectedPosition.Column, -1, 1);
             ShortMovement(SelectedPosition.Row, SelectedPosition.Column, -1, -1);
-
-
         }
 
         PositionVM LongMovement(int row, int col, int rowDelta, int colDelta)
@@ -417,60 +429,205 @@ namespace ChessMultiplayer.ViewModels.GameLogic
         }
         #endregion
 
+
+
         // Проверки на безопасность короля, которые пока работают криво. 
         #region Validation is king safe
-        enum Check { Empty, EndBoard, Ally, Enemy };
-        bool IsKingSafe(int targetRow, int targetCol)
+       
+         enum Check { Empty, EndBoard, Ally, Enemy };
+
+        void IsCheck()
         {
+            if (DiagonalCheck(whiteKingPosition) || StraightCheck(whiteKingPosition) || PawnCheck(whiteKingPosition) || KnightCheck(whiteKingPosition) || KingCheck(whiteKingPosition)) 
+            {
+                whiteKingPosition.State = PositionVM.CheckState.Check;
+            }
 
-            PositionVM currentKing;
-            FigureColor kingColor = SelectedPosition.Figure.FigureColor;
-            currentKing = kingColor == FigureColor.White ? whiteKingPosition : blackKingPosition;
+            if (DiagonalCheck(blackKingPosition) || StraightCheck(blackKingPosition) || PawnCheck(blackKingPosition) || KnightCheck(blackKingPosition) || KingCheck(blackKingPosition)) 
+            {
+                blackKingPosition.State = PositionVM.CheckState.CanBeat;
+            }
+        }
 
-            int kingRow = currentKing.Row;
-            int kingCol = currentKing.Column;
+        // returns true if finds enemy
+        bool DiagonalCheck(PositionVM currentKing)
+        {
+            var kingColor = currentKing.Figure.FigureColor;
+            PositionVM buff;
 
+            if ((buff = LongCheck(currentKing.Row, currentKing.Column, 1, 1, kingColor)) != null)
+            {
+                return (buff.Figure.FigureType == FigureType.Bishop || buff.Figure.FigureType == FigureType.Queen);
+            }
 
-            if (!LongKingCheck(kingRow, kingCol, targetRow, targetCol, 0, 1))
-                return false;
-            if (!LongKingCheck(kingRow, kingCol, targetRow, targetCol, 0, -1))
-                return false;
-            if (!LongKingCheck(kingRow, kingCol, targetRow, targetCol, 1, 0))
-                return false;
-            if (!LongKingCheck(kingRow, kingCol, targetRow, targetCol, -1, 0))
-                return false;
+            if ((buff = LongCheck(currentKing.Row, currentKing.Column, -1, 1, kingColor)) != null)
+            {
+                return (buff.Figure.FigureType == FigureType.Bishop || buff.Figure.FigureType == FigureType.Queen);
+            }
 
-            if (!LongKingCheck(kingRow, kingCol, targetRow, targetCol, 1, 1))
-                return false;
-            if (!LongKingCheck(kingRow, kingCol, targetRow, targetCol, -1, 1))
-                return false;
-            if (!LongKingCheck(kingRow, kingCol, targetRow, targetCol, 1, -1))
-                return false;
-            if (!LongKingCheck(kingRow, kingCol, targetRow, targetCol, -1, -1))
-                return false;
+            if ((buff = LongCheck(currentKing.Row, currentKing.Column, 1, -1, kingColor)) != null)
+            {
+                return (buff.Figure.FigureType == FigureType.Bishop || buff.Figure.FigureType == FigureType.Queen);
+            }
 
-            return true;
+            if ((buff = LongCheck(currentKing.Row, currentKing.Column, -1, -1, kingColor)) != null)
+            {
+                return (buff.Figure.FigureType == FigureType.Bishop || buff.Figure.FigureType == FigureType.Queen);
+            }
+
+            return false;
+        }
+
+        bool StraightCheck(PositionVM currentKing)
+        {
+            var kingColor = currentKing.Figure.FigureColor;
+            PositionVM buff;
+
+            if ((buff = LongCheck(currentKing.Row, currentKing.Column, 1, 0, kingColor)) != null)
+            {
+                return (buff.Figure.FigureType == FigureType.Rook || buff.Figure.FigureType == FigureType.Queen);
+            }
+
+            if ((buff = LongCheck(currentKing.Row, currentKing.Column, -1, 0, kingColor)) != null)
+            {
+                return (buff.Figure.FigureType == FigureType.Rook || buff.Figure.FigureType == FigureType.Queen);
+            }
+
+            if ((buff = LongCheck(currentKing.Row, currentKing.Column, 0, 1, kingColor)) != null)
+            {
+                return (buff.Figure.FigureType == FigureType.Rook || buff.Figure.FigureType == FigureType.Queen);
+            }
+
+            if ((buff = LongCheck(currentKing.Row, currentKing.Column, 0, -1, kingColor)) != null)
+            {
+                return (buff.Figure.FigureType == FigureType.Rook || buff.Figure.FigureType == FigureType.Queen);
+            }
+
+            return false;
+        }
+
+        bool PawnCheck(PositionVM currentKing)
+        {
+            var kingColor = currentKing.Figure.FigureColor;
+            PositionVM buff;
+            bool isWhite = kingColor == FigureColor.White;
+            int direction = isWhite ? -1 : 1;
+            int startRow = isWhite ? 6 : 1;
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, direction, 1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Pawn);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, direction, -1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Pawn);
+
+            return false;
+        }
+
+        bool KnightCheck(PositionVM currentKing)
+        {
+            var kingColor = currentKing.Figure.FigureColor;
+            PositionVM buff;
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, 2, 1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Knight);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, 2, -1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Knight);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, -2, 1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Knight);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, -2, -1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Knight);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, 1, 2, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Knight);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, 1, -2, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Knight);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, -1, 2, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Knight);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, -1, -2, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.Knight);
+
+            return false;
+        }
+
+        bool KingCheck(PositionVM currentKing)
+        {
+            var kingColor = currentKing.Figure.FigureColor;
+            PositionVM buff;
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, 1, 0, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.King);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, -1, 0, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.King);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, 0, 1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.King);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, 0, -1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.King);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, 1, 1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.King);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, 1, -1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.King);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, -1, 1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.King);
+
+            if ((buff = ShortCheck(currentKing.Row, currentKing.Column, -1, -1, kingColor)) != null)
+                return (buff.Figure.FigureType == FigureType.King);
+
+            return false;
         }
 
 
-        PositionVM LongCheck(int row, int col, int rowDelta, int colDelta)
+        PositionVM LongCheck(int row, int col, int rowDelta, int colDelta, FigureColor color)
         {
             PositionVM breakPosition;
+            int bufCol = col;
+            int bufRow = row;
 
-            if (!IsCoordinatesCorrect(col, row))
+            while(IsCoordinatesCorrect(bufRow, bufCol))
             {
-                return null;
+                if ((breakPosition = OneCheck(bufRow, bufCol, rowDelta, colDelta, color)) != null)
+                {
+                    if (breakPosition.Figure.FigureColor != color)
+                        return breakPosition;
+                    else
+                        return null;
+                }
+                bufRow += rowDelta;
+                bufCol += colDelta;
             }
-            if ((breakPosition = ShortCheck(row, col, rowDelta, colDelta)) != null)
-            {
-                return breakPosition;
-            }
-            // если не наткнулись на фигуру, то двигаемся дальше
-            LongCheck(row + rowDelta, col + colDelta, rowDelta, colDelta);
+
             return null;
         }
 
-        PositionVM ShortCheck(int row, int col, int rowDelta, int colDelta)
+        PositionVM ShortCheck(int row, int col, int rowDelta, int colDelta, FigureColor color)
+        {
+            PositionVM breakPosition;
+            int bufCol = col;
+            int bufRow = row;
+
+            if ((breakPosition = OneCheck(bufRow, bufCol, rowDelta, colDelta, color)) != null)
+            {
+                if (breakPosition.Figure.FigureColor != color)
+                    return breakPosition;
+                else
+                    return null;
+            }
+
+            return null;
+        }
+
+        PositionVM OneCheck(int row, int col, int rowDelta, int colDelta, FigureColor color)
         {
             int nextRow = row + rowDelta;
             int nextCol = col + colDelta;
@@ -479,167 +636,12 @@ namespace ChessMultiplayer.ViewModels.GameLogic
             {
                 return null;
             }
-            if (positions[nextRow][nextCol].Figure != null)
-            {
-                if (positions[nextRow][nextCol].Figure.FigureColor == SelectedPosition.Figure.FigureColor)
-                {
-                    return positions[nextRow][nextCol];
-                }
-            }
-
-            // будет ли король в безопасности при перемещении на эту позицию?
-            bool safeKingFlag = true;
-            //safeKingFlag = IsKingSafe(whiteKingPosition.Row, whiteKingPosition.Row);
 
             if (positions[nextRow][nextCol].Figure != null)
             {
-                if (safeKingFlag)
-                    positions[nextRow][nextCol].State = PositionVM.CheckState.CanBeat;
-
                 return positions[nextRow][nextCol];
             }
-
-            if (safeKingFlag)
-                positions[nextRow][nextCol].State = PositionVM.CheckState.CanMove;
             return null;
-        }
-
-
-
-
-
-        bool LongKingCheck(int checkingRow, int checkingCol, int targetRow, int targetCol, int rowDelta, int colDelta)
-        {
-
-            int row = checkingRow + rowDelta;
-            int col = checkingCol + colDelta;
-
-            while (IsCoordinatesCorrect(row, col))
-            {
-                Check checkState = ShortKingCheck(row, col, targetRow, targetCol);
-                switch (checkState)
-                {
-                    case Check.EndBoard: return true;
-                    case Check.Ally: return true;
-                    case Check.Enemy: return false;
-                    case Check.Empty:
-                        {
-                            row += rowDelta;
-                            col += colDelta;
-                            break;
-                        }
-                }
-            }
-            return true;
-        }
-
-        Check ShortKingCheck(int rowCoord, int colCoord, int targetRow, int targetCol)
-        {
-
-            if (!IsCoordinatesCorrect(rowCoord, colCoord))
-            {
-                return Check.EndBoard;
-            }
-            else if (positions[rowCoord][colCoord] == SelectedPosition) // если эта позиция, с которой уходит выделенная фигура
-            {
-                return Check.Empty;
-            }
-
-            else if (rowCoord == targetRow && colCoord == targetCol) // если сюда встанет выделенная фигура в результате следующего хода
-            {
-                return Check.Ally;
-            }
-
-            if (positions[rowCoord][colCoord].Figure != null)
-            {
-                IFigure anotherFigure = positions[rowCoord][colCoord].Figure;
-                if (anotherFigure.FigureColor == SelectedPosition.Figure.FigureColor)
-                {
-                    return Check.Ally;
-                }
-                else
-                {
-                    return Check.Enemy;
-                }
-            }
-            return Check.Empty;
-        }
-
-
-        bool IsKingReallySafe(FigureColor kingColor)
-        {
-            //PositionVM currentKing;
-            //currentKing = kingColor == FigureColor.White ? whiteKingPosition : blackKingPosition;
-
-            //int kingRow = currentKing.Row;
-            //int kingCol = currentKing.Column;
-
-            //if (!LongKingCheck(kingRow, kingCol, 0, 1, kingColor))
-            //    return false;
-            //if (!LongKingCheck(kingRow, kingCol, 0, -1, kingColor))
-            //    return false;
-            //if (!LongKingCheck(kingRow, kingCol, 1, 0, kingColor))
-            //    return false;
-            //if (!LongKingCheck(kingRow, kingCol, -1, 0, kingColor))
-            //    return false;
-
-            //if (!LongKingCheck(kingRow, kingCol, 1, 1, kingColor))
-            //    return false;
-            //if (!LongKingCheck(kingRow, kingCol, -1, 1, kingColor))
-            //    return false;
-            //if (!LongKingCheck(kingRow, kingCol, 1, -1, kingColor))
-            //    return false;
-            //if (!LongKingCheck(kingRow, kingCol, -1, -1, kingColor))
-            //    return false;
-
-            return true;
-        }
-
-        bool LongKingCheck(int checkingRow, int checkingCol, int rowDelta, int colDelta, FigureColor color)
-        {
-
-            //int row = checkingRow + rowDelta;
-            //int col = checkingCol + colDelta;
-
-            //while (IsCoordinatesCorrect(checkingCol, checkingRow))
-            //{
-            //    Check checkState = ShortKingCheck(row, col, color);
-            //    switch (checkState)
-            //    {
-            //        case Check.EndBoard: return true;
-            //        case Check.Ally: return true;
-            //        case Check.Enemy: return false;
-            //        case Check.Empty:
-            //            {
-            //                row += rowDelta;
-            //                col += colDelta;
-            //                break;
-            //            }
-            //    }
-            //}
-            return true;
-        }
-
-        Check ShortKingCheck(int rowCoord, int colCoord, FigureColor color)
-        {
-            //if (!IsCoordinatesCorrect(rowCoord, colCoord))
-            //{
-            //    return Check.EndBoard;
-            //}
-
-            //if (positions[rowCoord][colCoord].Figure != null)
-            //{
-            //    IFigure anotherFigure = positions[rowCoord][colCoord].Figure;
-            //    if (anotherFigure.FigureColor == color)
-            //    {
-            //        return Check.Ally;
-            //    }
-            //    else
-            //    {
-            //        return Check.Enemy;
-            //    }
-            //}
-            return Check.Empty;
         }
 
         #endregion

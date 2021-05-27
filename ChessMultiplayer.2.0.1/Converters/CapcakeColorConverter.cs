@@ -21,6 +21,7 @@ namespace ChessMultiplayer.Converters
                     case PositionVM.CheckState.Selected: return Color.LimeGreen; 
                     case PositionVM.CheckState.CanMove: return Color.White;
                     case PositionVM.CheckState.CanBeat: return Color.Tomato;
+                    case PositionVM.CheckState.Check: return Color.Coral;
                 }
             }
             else
@@ -31,6 +32,7 @@ namespace ChessMultiplayer.Converters
                     case PositionVM.CheckState.Selected: return Color.LimeGreen;
                     case PositionVM.CheckState.CanMove: return Color.MediumOrchid;
                     case PositionVM.CheckState.CanBeat: return Color.DarkRed;
+                    case PositionVM.CheckState.Check: return Color.Coral;
 
                 }
             }

@@ -177,7 +177,6 @@ namespace ChessMultiplayer.ViewModels
                         };
 
                         historyManager.Do(moveParameters);
-                        positionsManager.RemoveSelection();
                     } break;
             }
         }
