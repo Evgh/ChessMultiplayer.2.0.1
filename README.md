@@ -27,7 +27,7 @@ If I wrote the app now, a lot of things I would have done differently. Of course
 
 Not everything went smoothly, but I do not regret the work done. It was interesting to think through the logic of chess, and I am going to improve my development someday.
 
-##### In addition, I have gained experience with 
+### In addition, I have gained experience with 
 - Xamarin Forms
 - MVVM pattern 
 - Entity Framework
